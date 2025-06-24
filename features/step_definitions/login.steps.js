@@ -4,21 +4,21 @@ import LoginPage from '../../pages/login.page.js'
 
 let loginPage;
 
-Given('I am on the Demoblaze homepage', async function () {
+Given('I am on the Demoblaze login page', async function () {
     loginPage = new LoginPage(this.driver)
     await loginPage.open();
 })
 
-When('I login with username {string} and password {string}', async function (username, password) {
+When('I login using username {string} and password {string}', async function (username, password) {
     await loginPage.login(username, password);
 })
 
-Then('I should see {string}', async function (text) {
+Then('I should see a login welcome message {string}', async function (text) {
   const welcomeText = await loginPage.getWelcomeText();
   expect(welcomeText).to.include(text);
 });
 
-Given('I am logged in Demoblaze homepage', async function () {
+Given('I am logged in through the login form', async function () {
     loginPage = new LoginPage(this.driver);
     await loginPage.open();
     await loginPage.login("test", "test");
@@ -26,16 +26,16 @@ Given('I am logged in Demoblaze homepage', async function () {
     expect(welcomeText).to.include('Welcome');
 });
 
-When('I click the logout button', async function () {
+When('I trigger the logout from login', async function () {
     await loginPage.logout();
 });
 
-Then('I should not see the welcome message', async function () {
+Then('I should not see the welcome message on login', async function () {
     const welcomeText = await loginPage.getWelcomeText();
     expect(welcomeText).to.equal('');
 });
 
-When('I enter wrong password with username {string} and password {string}', async function (username, password) {
+When('I attempt login with invalid username {string} and password {string}', async function (username, password) {
    await loginPage.login(username, password);
 })
 
