@@ -18,6 +18,14 @@ Then('I should see {string}', async function (text) {
   expect(welcomeText).to.include(text);
 });
 
+Given('I am logged in Demoblaze homepage', async function () {
+    loginPage = new LoginPage(this.driver);
+    await loginPage.open();
+    await loginPage.login("test", "test");
+    const welcomeText = await loginPage.getWelcomeText();
+    expect(welcomeText).to.include('Welcome');
+});
+
 When('I click the logout button', async function () {
     await loginPage.logout();
 });
@@ -27,7 +35,7 @@ Then('I should not see the welcome message', async function () {
     expect(welcomeText).to.equal('');
 });
 
-When('I enter wrong password', async function (username, password) {
+When('I enter wrong password with username {string} and password {string}', async function (username, password) {
    await loginPage.login(username, password);
 })
 
